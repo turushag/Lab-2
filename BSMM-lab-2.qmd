@@ -74,7 +74,7 @@ missing_dates <- sum(is.na(the_tate$year))
 print(missing_dates)
 ```
 
-The number of artists whose works have missing dates is ***416***.
+The number of artists whose works have missing dates is ***461***.
 
 ```{r}
 the_tate|>dplyr::filter(is.na(year))|>dplyr::distinct(artist)
@@ -124,8 +124,6 @@ artists_to_resolve_50_percent
 
 ```
 
-### 
-
 ### Exercise 3
 
 The artist with the most works in the Tate collection is ***Turner, Joseph Mallord William***
@@ -152,8 +150,6 @@ top_10_artists <- artist_work_counts %>%
 print(top_10_artists)
 
 ```
-
-### 
 
 ### Exercise 4
 
@@ -208,7 +204,7 @@ duplicated_count
 
 ### Exercise 6
 
-The artist with the largest work in the tate collection is Therrien, RobertThe artist with the smallest work in the collection is Mesens, E.L.T. The smallest work has area 237 cm\^2.
+The artist with the largest work in the tate collection is **Therrien, Robert.** The artist with the smallest work in the collection is **Mesens, E.L.T.** The smallest work has area **237 cm\^2.**
 
 ```{r}
 
@@ -310,14 +306,33 @@ print(summary_data)
 
 ### Exercise 9
 
-The period volatility was 19.52%
-
-### 
+The period volatility was **48.77**%
 
 ```{r}
-# Calculate the period volatility as the standard deviation of annual returns
-period_volatility <- sd(summary_data$Annual_Return)
+# Install packages for reading the csv file
 
-# Print the period volatility
-cat("The period volatility was:", round(period_volatility, 2), "%\n")
+# Load required libraries
+library(dplyr)
+library(readr)
+
+# Calculate period return and period volatility
+period_return <- prod(1 + summary_data$Annual_Return) - 1
+period_volatility <- sqrt(sum(summary_data$Annual_StdDev^2))
+
+# Create summary rows for period return and period volatility
+summary_rows <- tibble::tibble(
+  Year = as.character("Period"),  # Ensure "Year" is character type
+  Annual_Return = period_return,
+  Annual_StdDev = period_volatility
+)
+
+# Convert the "Year" column in summary_data to character
+summary_data <- summary_data |>
+  mutate(Year = as.character(Year))
+
+# Combine the summary rows with the summary_data
+summary_data <- bind_rows(summary_data, summary_rows)
+
+# Print the summary data
+print(summary_data)
 ```

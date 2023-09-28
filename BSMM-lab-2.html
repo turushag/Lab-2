@@ -3121,7 +3121,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
 ✖ purrr::set_names() masks magrittr::set_names()
 ✖ yardstick::spec()  masks readr::spec()
 ✖ recipes::step()    masks stats::step()
-• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
+• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)           <span class="co"># for making display tables</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtExtras)     <span class="co"># helper functions for beautiful tables</span></span>
@@ -3172,7 +3172,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
 <pre><code>[1] 5397</code></pre>
 </div>
 </div>
-<p>The number of artists whose works have missing dates is <strong><em>416</em></strong>.</p>
+<p>The number of artists whose works have missing dates is <strong><em>461</em></strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>the_tate<span class="sc">|&gt;</span>dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">is.na</span>(year))<span class="sc">|&gt;</span>dplyr<span class="sc">::</span><span class="fu">distinct</span>(artist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3238,9 +3238,6 @@ dbl (3): id, yearOfBirth, yearOfDeath
 </div>
 </div>
 </section>
-<section id="section-1" class="level3">
-<h3 class="anchored" data-anchor-id="section-1"></h3>
-</section>
 <section id="exercise-3" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
 <p>The artist with the most works in the Tate collection is <strong><em>Turner, Joseph Mallord William</em></strong></p>
@@ -3280,9 +3277,6 @@ dbl (3): id, yearOfBirth, yearOfDeath
 </div>
 </div>
 </section>
-<section id="section-2" class="level3">
-<h3 class="anchored" data-anchor-id="section-2"></h3>
-</section>
 <section id="exercise-4" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
 <p>The artist with the greatest number of works in the Tate collection represent % of the total number of works</p>
@@ -3304,23 +3298,23 @@ dbl (3): id, yearOfBirth, yearOfDeath
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the formatted table</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;div id=&quot;nhcunvbpwf&quot; style=&quot;padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&quot;&gt;
-  &lt;style&gt;#nhcunvbpwf table {
+<pre><code>&lt;div id=&quot;iqckcnqazf&quot; style=&quot;padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&quot;&gt;
+  &lt;style&gt;#iqckcnqazf table {
   font-family: system-ui, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;, &#39;Noto Color Emoji&#39;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nhcunvbpwf thead, #nhcunvbpwf tbody, #nhcunvbpwf tfoot, #nhcunvbpwf tr, #nhcunvbpwf td, #nhcunvbpwf th {
+#iqckcnqazf thead, #iqckcnqazf tbody, #iqckcnqazf tfoot, #iqckcnqazf tr, #iqckcnqazf td, #iqckcnqazf th {
   border-style: none;
 }
 
-#nhcunvbpwf p {
+#iqckcnqazf p {
   margin: 0;
   padding: 0;
 }
 
-#nhcunvbpwf .gt_table {
+#iqckcnqazf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3346,12 +3340,12 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-left-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_caption {
+#iqckcnqazf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nhcunvbpwf .gt_title {
+#iqckcnqazf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3363,7 +3357,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-bottom-width: 0;
 }
 
-#nhcunvbpwf .gt_subtitle {
+#iqckcnqazf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3375,7 +3369,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-top-width: 0;
 }
 
-#nhcunvbpwf .gt_heading {
+#iqckcnqazf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3387,13 +3381,13 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-right-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_bottom_border {
+#iqckcnqazf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_col_headings {
+#iqckcnqazf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3408,7 +3402,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-right-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_col_heading {
+#iqckcnqazf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3428,7 +3422,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   overflow-x: hidden;
 }
 
-#nhcunvbpwf .gt_column_spanner_outer {
+#iqckcnqazf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3440,15 +3434,15 @@ dbl (3): id, yearOfBirth, yearOfDeath
   padding-right: 4px;
 }
 
-#nhcunvbpwf .gt_column_spanner_outer:first-child {
+#iqckcnqazf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nhcunvbpwf .gt_column_spanner_outer:last-child {
+#iqckcnqazf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nhcunvbpwf .gt_column_spanner {
+#iqckcnqazf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3460,11 +3454,11 @@ dbl (3): id, yearOfBirth, yearOfDeath
   width: 100%;
 }
 
-#nhcunvbpwf .gt_spanner_row {
+#iqckcnqazf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nhcunvbpwf .gt_group_heading {
+#iqckcnqazf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3490,7 +3484,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   text-align: left;
 }
 
-#nhcunvbpwf .gt_empty_group_heading {
+#iqckcnqazf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3505,15 +3499,15 @@ dbl (3): id, yearOfBirth, yearOfDeath
   vertical-align: middle;
 }
 
-#nhcunvbpwf .gt_from_md &gt; :first-child {
+#iqckcnqazf .gt_from_md &gt; :first-child {
   margin-top: 0;
 }
 
-#nhcunvbpwf .gt_from_md &gt; :last-child {
+#iqckcnqazf .gt_from_md &gt; :last-child {
   margin-bottom: 0;
 }
 
-#nhcunvbpwf .gt_row {
+#iqckcnqazf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3532,7 +3526,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   overflow-x: hidden;
 }
 
-#nhcunvbpwf .gt_stub {
+#iqckcnqazf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3545,7 +3539,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   padding-right: 5px;
 }
 
-#nhcunvbpwf .gt_stub_row_group {
+#iqckcnqazf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3559,15 +3553,15 @@ dbl (3): id, yearOfBirth, yearOfDeath
   vertical-align: top;
 }
 
-#nhcunvbpwf .gt_row_group_first td {
+#iqckcnqazf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nhcunvbpwf .gt_row_group_first th {
+#iqckcnqazf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nhcunvbpwf .gt_summary_row {
+#iqckcnqazf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3577,16 +3571,16 @@ dbl (3): id, yearOfBirth, yearOfDeath
   padding-right: 5px;
 }
 
-#nhcunvbpwf .gt_first_summary_row {
+#iqckcnqazf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_first_summary_row.thick {
+#iqckcnqazf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nhcunvbpwf .gt_last_summary_row {
+#iqckcnqazf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3596,7 +3590,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-bottom-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_grand_summary_row {
+#iqckcnqazf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3606,7 +3600,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   padding-right: 5px;
 }
 
-#nhcunvbpwf .gt_first_grand_summary_row {
+#iqckcnqazf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3616,7 +3610,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-top-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_last_grand_summary_row_top {
+#iqckcnqazf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3626,11 +3620,11 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-bottom-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_striped {
+#iqckcnqazf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nhcunvbpwf .gt_table_body {
+#iqckcnqazf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3639,7 +3633,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-bottom-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_footnotes {
+#iqckcnqazf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3653,7 +3647,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-right-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_footnote {
+#iqckcnqazf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3662,7 +3656,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   padding-right: 5px;
 }
 
-#nhcunvbpwf .gt_sourcenotes {
+#iqckcnqazf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3676,7 +3670,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
   border-right-color: #D3D3D3;
 }
 
-#nhcunvbpwf .gt_sourcenote {
+#iqckcnqazf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3684,63 +3678,63 @@ dbl (3): id, yearOfBirth, yearOfDeath
   padding-right: 5px;
 }
 
-#nhcunvbpwf .gt_left {
+#iqckcnqazf .gt_left {
   text-align: left;
 }
 
-#nhcunvbpwf .gt_center {
+#iqckcnqazf .gt_center {
   text-align: center;
 }
 
-#nhcunvbpwf .gt_right {
+#iqckcnqazf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nhcunvbpwf .gt_font_normal {
+#iqckcnqazf .gt_font_normal {
   font-weight: normal;
 }
 
-#nhcunvbpwf .gt_font_bold {
+#iqckcnqazf .gt_font_bold {
   font-weight: bold;
 }
 
-#nhcunvbpwf .gt_font_italic {
+#iqckcnqazf .gt_font_italic {
   font-style: italic;
 }
 
-#nhcunvbpwf .gt_super {
+#iqckcnqazf .gt_super {
   font-size: 65%;
 }
 
-#nhcunvbpwf .gt_footnote_marks {
+#iqckcnqazf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nhcunvbpwf .gt_asterisk {
+#iqckcnqazf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nhcunvbpwf .gt_indent_1 {
+#iqckcnqazf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nhcunvbpwf .gt_indent_2 {
+#iqckcnqazf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nhcunvbpwf .gt_indent_3 {
+#iqckcnqazf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nhcunvbpwf .gt_indent_4 {
+#iqckcnqazf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nhcunvbpwf .gt_indent_5 {
+#iqckcnqazf .gt_indent_5 {
   text-indent: 25px;
 }
 &lt;/style&gt;
@@ -13807,7 +13801,7 @@ dbl (3): id, yearOfBirth, yearOfDeath
 </section>
 <section id="exercise-6" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-6">Exercise 6</h3>
-<p>The artist with the largest work in the tate collection is Therrien, RobertThe artist with the smallest work in the collection is Mesens, E.L.T. The smallest work has area 237 cm^2.</p>
+<p>The artist with the largest work in the tate collection is <strong>Therrien, Robert.</strong> The artist with the smallest work in the collection is <strong>Mesens, E.L.T.</strong> The smallest work has area <strong>237 cm^2.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the required libraries</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -13961,18 +13955,45 @@ dbl (4): Close/Last, Open, High, Low
 </section>
 <section id="exercise-9" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-9">Exercise 9</h3>
-<p>The period volatility was 19.52%</p>
-</section>
-<section id="section-3" class="level3">
-<h3 class="anchored" data-anchor-id="section-3"></h3>
+<p>The period volatility was <strong>48.77</strong>%</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the period volatility as the standard deviation of annual returns</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>period_volatility <span class="ot">&lt;-</span> <span class="fu">sd</span>(summary_data<span class="sc">$</span>Annual_Return)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the period volatility</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;The period volatility was:&quot;</span>, <span class="fu">round</span>(period_volatility, <span class="dv">2</span>), <span class="st">&quot;%</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages for reading the csv file</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate period return and period volatility</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>period_return <span class="ot">&lt;-</span> <span class="fu">prod</span>(<span class="dv">1</span> <span class="sc">+</span> summary_data<span class="sc">$</span>Annual_Return) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>period_volatility <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(summary_data<span class="sc">$</span>Annual_StdDev<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary rows for period return and period volatility</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>summary_rows <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Year =</span> <span class="fu">as.character</span>(<span class="st">&quot;Period&quot;</span>),  <span class="co"># Ensure &quot;Year&quot; is character type</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Annual_Return =</span> period_return,</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">Annual_StdDev =</span> period_volatility</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the &quot;Year&quot; column in summary_data to character</span></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> summary_data <span class="sc">|&gt;</span></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.character</span>(Year))</span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the summary rows with the summary_data</span></span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(summary_data, summary_rows)</span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary data</span></span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The period volatility was: 19.52 %</code></pre>
+<pre><code># A tibble: 7 × 3
+  Year   Annual_Return Annual_StdDev
+  &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;
+1 2018            13.7          12.1
+2 2019           -22.4          12.6
+3 2020           -14.0          34.7
+4 2021           -21.2          13.2
+5 2022            24.1          24.1
+6 2023           -12.8          10.7
+7 Period    24513798.           48.8</code></pre>
 </div>
 </div>
 </section>
