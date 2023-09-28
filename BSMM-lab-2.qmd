@@ -1,8 +1,8 @@
 ---
 title: "BSMM-lab-2"
 subtitle: "BSMM 8740 Fall 2023"
-author: "Add your name here"
-date: "Add the date here"
+author: "Turusha"
+date: "September 25, 2023"
 format: html
 editor: visual
 self-contained: true
@@ -13,7 +13,7 @@ self-contained: true
 Load packages and data:
 
 ```{r load-pkg-data}
-#| message: false
+
 the_tate <- readr::read_delim("data/the-tate-collection.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 the_tate_artists <- readr::read_csv("data/the-tate-artists.csv")
 ```
@@ -22,50 +22,302 @@ the_tate_artists <- readr::read_csv("data/the-tate-artists.csv")
 
 ### Exercise 1
 
-The `the_tate` dataset has \_\_\_ unique artists who worked from \_\_\_ to \_\_\_. The works were acquired between the years \_\_\_ and \_\_\_.
+The the_tate dataset has ***3336*** unique artists who worked from ***1545** to **2012** .* The works were acquired between the years ***1823** and **2013*** .
+
+```{r}
+library(magrittr)     # the pipe
+library(tidyverse)    # for data wrangling + visualization
+library(tidymodels)   # for modeling
+library(gt)           # for making display tables
+library(gtExtras)     # helper functions for beautiful tables
+    # helper functions for beautiful tables
+
+```
+
+```{r}
+#View(the_tate)
+#View(the_tate_artists)
+```
+
+```{r}
+observation <- the_tate %>%
+  summarise(
+    unique_artists = n_distinct(artist),
+    period = min(year,na.rm=TRUE),max(year,na.rm=TRUE),
+    acquisition_period = min(acquisitionYear,na.rm=TRUE), max(acquisitionYear,na.rm=TRUE)
+  )
+
+# Display the general observations
+print(observation)
+```
+
+```{r}
+#install.packages("DataExplorer")
+#DataExplorer::plot_missing(the_tate)
+```
+
+### 
 
 ### Exercise 2
 
-How number of works with missing dates is \_\_.
+How number of works with missing dates is ***5397*** **\
+**The number of artists whose works have missing dates is ***461***.
 
-The number of artists whose works have missing dates is \_\_.
+It would require resolving missing year data for only **11** artists resolve at least 50% of the missing data.
 
-It would require resolving missing year data for only \_\_ artists resolve resolve at least 50% of the missing data.
+The missing year data likely to be classified as ***Missing At Random\
+(MAR)***
 
-The missing year data likely to be classified as \_\_\_\_.
+```{r}
+#missing date
+missing_dates <- sum(is.na(the_tate$year))
+print(missing_dates)
+```
+
+The number of artists whose works have missing dates is ***416***.
+
+```{r}
+the_tate|>dplyr::filter(is.na(year))|>dplyr::distinct(artist)
+
+```
+
+```{r}
+artists_with_missing_dates <- the_tate %>%
+  filter(is.na(year)) %>%
+  distinct(artist) %>%
+  nrow()
+
+artists_with_missing_dates
+```
+
+```{r}
+# Count the number of works missing years for each artist
+artist_missing_year_counts <- the_tate|>dplyr::filter(is.na(year)) %>% 
+  group_by(artist) %>%
+  summarise(missing_years = sum(is.na(year))) %>%
+  arrange(desc(missing_years)) %>%
+  as_tibble()
+
+# Determine how many artists have works with missing years
+artists_with_missing_years <- nrow(artist_missing_year_counts)
+artists_with_missing_years
+```
+
+It would require resolving missing year data for only **11** artists resolve at least 50% of the missing data.
+
+```{r}
+# Calculate the percent of total missing data for each artist
+artist_missing_year_counts <- artist_missing_year_counts %>%
+  mutate(percentage = (missing_years / missing_dates) * 100)
+
+# Calculate the cumulative percent of missing data
+artist_missing_year_counts <- artist_missing_year_counts %>%
+  mutate(cumulative_percentage = cumsum(percentage))
+
+```
+
+```{r}
+# Identify the smallest number of artists needed to resolve at least 50% of the missing year data
+artists_to_resolve_50_percent <- min(which(artist_missing_year_counts$cumulative_percentage >= 50))
+
+artists_to_resolve_50_percent
+
+```
+
+### 
 
 ### Exercise 3
 
-The artist with the most works in the Tate collection is \_\_\_.
+The artist with the most works in the Tate collection is ***Turner, Joseph Mallord William***
 
-The artist with the tenth-most works in the Tate collection is \_\_\_.
+The artist with the tenth-most works in the Tate collection is ***Warhol, Andy***
+
+```{r}
+library(dplyr)
+library(tidyr)
+
+# Assuming your dataset is named "tate_collection" and the artist column is named "artist"
+
+# Group the data by artist and count the number of works for each artist
+artist_work_counts <- the_tate %>%
+  group_by(artist) %>%
+  summarize(medium = n()) %>%
+  arrange(desc(medium))
+
+# Display the top 10 artists by the number of works
+top_10_artists <- artist_work_counts %>%
+  slice_head(n = 10)
+
+# Print the table for the top 10 artists
+print(top_10_artists)
+
+```
+
+### 
 
 ### Exercise 4
 
-The artist with the greatest number of works in the Tate collection represent \_\_\_% of the total number of works
+The artist with the greatest number of works in the Tate collection represent % of the total number of works
+
+```{r}
+
+# Calculate the percentage of the total collection for each artist
+total_works <- nrow(the_tate)
+artist_work_counts <- artist_work_counts %>%
+  mutate(percentage = (medium / total_works) * 100)
+
+# Create the table using gt
+table <- artist_work_counts %>%
+  gt() %>%
+  fmt_percent(
+    columns = percentage,
+    decimals = 2
+  ) %>%
+  tab_header(title = "Top Artists by Number of Works and Percentage of Collection") %>%
+
+# Print the formatted table
+print(table)
+```
 
 ### Exercise 5
 
-There are \_\_ duplicate artist-title pairs
+There are ***23705*** duplicate artist-title pairs
+
+```{r}
+total_rows <- total_works
+
+# Select only the columns for artist and title, then count distinct pairs
+distinct_artist_title_pair <- the_tate %>% select(artist,title) %>% distinct()
+
+# Count of distinct artist-title pairs
+distinct_count <- nrow(distinct_artist_title_pair)
+
+total_rows
+```
+
+```{r}
+distinct_count
+
+```
+
+```{r}
+# Count the number of duplicated artist-title pairs
+duplicated_count <- total_rows - distinct_count
+duplicated_count
+```
 
 ### Exercise 6
 
-The artist with the largest work in the tate collection is \_\_\_
+The artist with the largest work in the tate collection is Therrien, RobertThe artist with the smallest work in the collection is Mesens, E.L.T. The smallest work has area 237 cm\^2.
 
-The artist with the smallest work in the collection is \_\_\_. The smallest work has area \_\_\_ $\text{cm}^2$
+```{r}
+
+# Load the required libraries
+library(dplyr)
+library(tidyr)
+
+# Calculate the area of each artwork and add it as a new column
+the_tate <- the_tate %>%
+  mutate(area_cm2 = width * height)
+
+# Select artist, title, and area, remove NA values
+selected_artworks <- the_tate %>%
+  select(artist, title, area_cm2) %>%
+  drop_na()  # Remove rows with NA values
+
+# Order the works by area
+ordered_artworks <- selected_artworks %>%
+  arrange(area_cm2)
+
+# Find the largest artwork in the collection
+largest_artwork <- ordered_artworks %>%
+  slice_tail(n = 1)
+
+# Find the smallest artwork in the collection
+smallest_artwork <- ordered_artworks %>%
+  slice_head(n = 1)
+
+# Print the largest and smallest artworks
+
+print(largest_artwork)
+```
+
+```{r}
+
+print(smallest_artwork)
+
+```
 
 ### Exercise 7
 
-...
+```{r}
+# Load the required libraries
+library(dplyr)
+
+
+
+# Left join the tables and group the result by gender
+gender_grouped<- the_tate %>%
+  left_join(the_tate_artists, by = c("artist" = "name")) %>%  filter(!is.na(gender)) %>% group_by(gender) 
+
+```
+
+```{r}
+# resulting table
+gender_grouped
+```
 
 ### Exercise 8
 
-The annual return in the SPX price in 2020 was \_\_\_%.
+The annual return in the SPX price in 2020 was **-13.98 (almost 14)** %.
 
-The corresponding price volatility was \_\_\_%.
+The corresponding price volatility was **34.70**%.
+
+```{r}
+library(readr)
+dataofstock <- read_csv("data/SPX_HistoricalData_1692322132002.csv")
+```
+
+```{r}
+#View(dataofstock)
+```
+
+```{r}
+# Add a column for the year of the transaction
+dataofstock <- dataofstock %>%
+  mutate(Year = lubridate::year(as.Date(Date, format = "%m/%d/%Y")))
+
+dataofstock <- dataofstock %>%
+  rename("close"=`Close/Last`)
+
+dataofstock <- dataofstock %>%
+  mutate(rd = log(lead(close) / close))
+
+dataofstock <- dataofstock %>%
+  mutate(vard = rd^2)
+
+summary_data <- dataofstock %>%
+  group_by(Year) %>%
+  summarize(
+    Annual_Return = (exp(sum(rd, na.rm = TRUE)) - 1)*100,
+    Annual_StdDev = sqrt(sum(vard, na.rm = TRUE))*100,
+    .groups = "drop"  # Drop grouping after summary
+  )
+
+# Print the summary data
+print(summary_data)
+```
 
 ### Exercise 9
 
-The period volatility was \_\_\_.\_%
+The period volatility was 19.52%
 
 ### 
+
+```{r}
+# Calculate the period volatility as the standard deviation of annual returns
+period_volatility <- sd(summary_data$Annual_Return)
+
+# Print the period volatility
+cat("The period volatility was:", round(period_volatility, 2), "%\n")
+```
