@@ -12,6 +12,24 @@ self-contained: true
 
 Load packages and data:
 
+```{r}
+#install.packages("tidyverse")
+#install.packages("gt")          
+#install.packages("gtExtras")     
+#install.packages("DataExplorer")
+#install.packages("tidymodels")
+#install.packages("gt")
+```
+
+```{r}
+library(magrittr)    
+library(tidyverse)
+library(tidymodels)
+library(gt)           
+library(gtExtras)     
+library(DataExplorer)
+```
+
 ```{r load-pkg-data}
 
 the_tate <- readr::read_delim("data/the-tate-collection.csv", ";", escape_double = FALSE, trim_ws = TRUE)
@@ -22,16 +40,10 @@ the_tate_artists <- readr::read_csv("data/the-tate-artists.csv")
 
 ### Exercise 1
 
-The the_tate dataset has ***3336*** unique artists who worked from ***1545** to **2012** .* The works were acquired between the years ***1823** and **2013*** .
+The the_tate dataset has ***3342*** unique artists who worked from ***1545** to **2012** .* The works were acquired between the years ***1823** and **2013*** .
 
 ```{r}
-library(magrittr)     # the pipe
-library(tidyverse)    # for data wrangling + visualization
-library(tidymodels)   # for modeling
-library(gt)           # for making display tables
-library(gtExtras)     # helper functions for beautiful tables
-    # helper functions for beautiful tables
-
+glimpse(the_tate_artists)
 ```
 
 ```{r}
@@ -40,28 +52,75 @@ library(gtExtras)     # helper functions for beautiful tables
 ```
 
 ```{r}
-observation <- the_tate %>%
-  summarise(
-    unique_artists = n_distinct(artist),
-    period = min(year,na.rm=TRUE),max(year,na.rm=TRUE),
-    acquisition_period = min(acquisitionYear,na.rm=TRUE), max(acquisitionYear,na.rm=TRUE)
-  )
+glimpse(the_tate)
 
-# Display the general observations
-print(observation)
 ```
 
 ```{r}
-#install.packages("DataExplorer")
-#DataExplorer::plot_missing(the_tate)
+summary(the_tate)
 ```
 
-### 
+```{r}
+#summarize function use to find summary of each artist
+the_tate %>% dplyr::group_by(the_tate$artistId) %>% 
+dplyr::summarize(N=n(),min_yearworking= min(the_tate$year,na.rm = TRUE),
+max_yearworking= max(the_tate$year,na.rm = TRUE),
+min_aquistionyear=min(the_tate$acquisitionYear, na.rm = TRUE),
+max_acquisitionyear=max(the_tate$year,na.rm = TRUE)  )
+```
+
+```{r}
+
+library(dplyr)
+# the number of unique artists using select
+unique_artists_count <- the_tate %>%
+  select(artistId) %>%
+  distinct() %>%
+  nrow()
+unique_artists_count
+```
+
+```{r}
+# the range of years artists worked
+min_year_worked <- min(the_tate$year,na.rm = TRUE)
+max_year_worked <- max(the_tate$year,na.rm = TRUE)
+
+# the range of acquisition years
+min_acquisition_year <- min(the_tate$acquisitionYear, na.rm = TRUE)
+max_acquisition_year <- max(the_tate$acquisitionYear, na.rm = TRUE)
+
+cat (min_year_worked, "to", max_year_worked, ".\n")
+```
+
+```{r}
+cat( min_acquisition_year, "and", max_acquisition_year, ".\n")
+
+```
+
+```{r}
+DataExplorer::introduce(the_tate)
+
+```
+
+```{r}
+DataExplorer::introduce(the_tate_artists)
+
+```
+
+```{r}
+DataExplorer::plot_missing(the_tate)
+
+```
+
+```{r}
+DataExplorer::plot_missing(the_tate_artists)
+
+```
 
 ### Exercise 2
 
 How number of works with missing dates is ***5397*** **\
-**The number of artists whose works have missing dates is ***461***.
+**The number of artists whose works have missing dates is ***462***.
 
 It would require resolving missing year data for only **11** artists resolve at least 50% of the missing data.
 
@@ -77,28 +136,28 @@ print(missing_dates)
 The number of artists whose works have missing dates is ***461***.
 
 ```{r}
-the_tate|>dplyr::filter(is.na(year))|>dplyr::distinct(artist)
+the_tate|>dplyr::filter(is.na(year))|>dplyr::distinct(artistId)
 
 ```
 
 ```{r}
 artists_with_missing_dates <- the_tate %>%
   filter(is.na(year)) %>%
-  distinct(artist) %>%
+  distinct(artistId) %>%
   nrow()
 
 artists_with_missing_dates
 ```
 
 ```{r}
-# Count the number of works missing years for each artist
+# the number of works missing years for each artist
 artist_missing_year_counts <- the_tate|>dplyr::filter(is.na(year)) %>% 
-  group_by(artist) %>%
+  group_by(artistId) %>%
   summarise(missing_years = sum(is.na(year))) %>%
   arrange(desc(missing_years)) %>%
   as_tibble()
 
-# Determine how many artists have works with missing years
+# Number of artists have works with missing years
 artists_with_missing_years <- nrow(artist_missing_year_counts)
 artists_with_missing_years
 ```
@@ -106,18 +165,18 @@ artists_with_missing_years
 It would require resolving missing year data for only **11** artists resolve at least 50% of the missing data.
 
 ```{r}
-# Calculate the percent of total missing data for each artist
+# the percent of total missing data for each artist
 artist_missing_year_counts <- artist_missing_year_counts %>%
   mutate(percentage = (missing_years / missing_dates) * 100)
 
-# Calculate the cumulative percent of missing data
+# the cumulative percent of missing data
 artist_missing_year_counts <- artist_missing_year_counts %>%
   mutate(cumulative_percentage = cumsum(percentage))
 
 ```
 
 ```{r}
-# Identify the smallest number of artists needed to resolve at least 50% of the missing year data
+# the smallest number of artists needed to resolve at least 50% of the missing year data
 artists_to_resolve_50_percent <- min(which(artist_missing_year_counts$cumulative_percentage >= 50))
 
 artists_to_resolve_50_percent
@@ -126,43 +185,46 @@ artists_to_resolve_50_percent
 
 ### Exercise 3
 
-The artist with the most works in the Tate collection is ***Turner, Joseph Mallord William***
+The artist with the most works in the Tate collection is ***Turner, Joseph Mallord William with ID 558***
 
-The artist with the tenth-most works in the Tate collection is ***Warhol, Andy***
+The artist with the tenth-most works in the Tate collection is ***Warhol, Andy with ID 2121***
 
 ```{r}
-library(dplyr)
-library(tidyr)
 
-# Assuming your dataset is named "tate_collection" and the artist column is named "artist"
 
 # Group the data by artist and count the number of works for each artist
 artist_work_counts <- the_tate %>%
   group_by(artist) %>%
-  summarize(medium = n()) %>%
-  arrange(desc(medium))
+  summarize(title = n()) %>%
+  arrange(desc(title))
 
 # Display the top 10 artists by the number of works
 top_10_artists <- artist_work_counts %>%
   slice_head(n = 10)
 
+the_tate %>% dplyr::filter(artistId %in% c(558,2121)) %>% dplyr::select(artistId,artist) %>% distinct(artistId,artist) 
+
+
+
+```
+
+```{r}
 # Print the table for the top 10 artists
 print(top_10_artists)
-
 ```
 
 ### Exercise 4
 
-The artist with the greatest number of works in the Tate collection represent % of the total number of works
+The artist with the greatest number of works in the Tate collection represent **56.92**% of the total number of works
 
 ```{r}
 
-# Calculate the percentage of the total collection for each artist
+# the percentage of the total collection for each artist
 total_works <- nrow(the_tate)
 artist_work_counts <- artist_work_counts %>%
-  mutate(percentage = (medium / total_works) * 100)
+  mutate(percentage = (title / total_works) * 100)
 
-# Create the table using gt
+# the table using gt
 table <- artist_work_counts %>%
   gt() %>%
   fmt_percent(
@@ -182,7 +244,7 @@ There are ***23705*** duplicate artist-title pairs
 ```{r}
 total_rows <- total_works
 
-# Select only the columns for artist and title, then count distinct pairs
+# only the columns for artist and title, then count distinct pairs
 distinct_artist_title_pair <- the_tate %>% select(artist,title) %>% distinct()
 
 # Count of distinct artist-title pairs
@@ -204,38 +266,35 @@ duplicated_count
 
 ### Exercise 6
 
-The artist with the largest work in the tate collection is **Therrien, Robert.** The artist with the smallest work in the collection is **Mesens, E.L.T.** The smallest work has area **237 cm\^2.**
+The artist with the largest work in the tate collection is **Therrien, Robert.** The artist with the smallest work in the collection is **Mesens, E.L.T.** The smallest work has area **2.37 cm\^2.**
 
 ```{r}
 
-# Load the required libraries
-library(dplyr)
-library(tidyr)
-
-# Calculate the area of each artwork and add it as a new column
+#  the area of each artwork and add it as a new column
 the_tate <- the_tate %>%
-  mutate(area_cm2 = width * height)
+  mutate(area_cm2 = (width * height)/100)
 
-# Select artist, title, and area, remove NA values
+#  remove NA values
 selected_artworks <- the_tate %>%
   select(artist, title, area_cm2) %>%
   drop_na()  # Remove rows with NA values
 
-# Order the works by area
+#works by area
 ordered_artworks <- selected_artworks %>%
   arrange(area_cm2)
 
-# Find the largest artwork in the collection
+# the largest artwork 
 largest_artwork <- ordered_artworks %>%
   slice_tail(n = 1)
 
-# Find the smallest artwork in the collection
+# the smallest artwork 
 smallest_artwork <- ordered_artworks %>%
   slice_head(n = 1)
 
 # Print the largest and smallest artworks
 
 print(largest_artwork)
+
 ```
 
 ```{r}
@@ -254,7 +313,8 @@ library(dplyr)
 
 # Left join the tables and group the result by gender
 gender_grouped<- the_tate %>%
-  left_join(the_tate_artists, by = c("artist" = "name")) %>%  filter(!is.na(gender)) %>% group_by(gender) 
+  left_join(the_tate_artists, by = join_by(artistId == id)) %>%  filter(!is.na(gender)) %>% group_by(gender) 
+
 
 ```
 
